@@ -1,7 +1,332 @@
-<!doctype html>
-<meta charset=
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio</title>
+<style>
+    /* CSS Reset & Variables */
+    :root {
+        --primary-color: #2c3e50;
+        --accent-color: #3498db;
+        --bg-color: #f8f9fa;
+        --text-color: #333;
+        --card-bg: #ffffff;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+    }
+    html {
+        scroll-behavior: smooth;
+    }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    ul {
+        list-style: none;
+    }
 
-"utf-8">
-<title>自己紹介</title>
-<h1>自己紹介</h1>
-<p>授業で作成したページです。</p>
+    /* Header & Navigation */
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        background-color: var(--card-bg);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        z-index: 1000;
+    }
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+    }
+    .nav-links a {
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+    .nav-links a:hover {
+        color: var(--accent-color);
+    }
+    .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+
+    /* Main Content */
+    main {
+        margin-top: 80px;
+        padding: 2rem 1rem;
+    }
+    section {
+        max-width: 800px;
+        margin: 0 auto 4rem auto;
+        background: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        /* Scroll Animation Setup */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .section-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    h2 {
+        color: var(--primary-color);
+        display: inline-block;
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 0.5rem;
+    }
+
+    /* About Section */
+    .about-content {
+        text-align: center;
+    }
+    .avatar-placeholder {
+        width: 120px;
+        height: 120px;
+        background-color: #e0e0e0;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+        font-size: 0.9rem;
+    }
+    .about-content h3 {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+
+    /* Skills Section */
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .skill-item {
+        background: var(--bg-color);
+        padding: 0.8rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 500;
+        border: 1px solid #eaeaea;
+        transition: transform 0.2s;
+    }
+    .skill-item:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent-color);
+    }
+
+    /* Works Section */
+    .works-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+    }
+    .work-card {
+        border: 1px solid #eaeaea;
+        padding: 1.5rem;
+        border-radius: 8px;
+        background: var(--bg-color);
+        transition: box-shadow 0.3s;
+    }
+    .work-card:hover {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .work-card h3 {
+        margin-bottom: 0.8rem;
+        color: var(--primary-color);
+    }
+
+    /* Reflection Section */
+    .reflection-content p {
+        margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 2rem;
+        background: var(--primary-color);
+        color: #fff;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 1rem 0;
+            box-shadow: 0 4px 5px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .nav-links.active {
+            display: flex;
+        }
+        .menu-toggle {
+            display: block;
+        }
+        section {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <div class="logo">MyPortfolio</div>
+        <div class="menu-toggle" id="mobile-menu">☰</div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#works">Works</a></li>
+            <li><a href="#reflection">Reflection</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section id="about">
+        <div class="section-header">
+            <h2>About</h2>
+        </div>
+        <div class="about-content">
+            <div class="avatar-placeholder">No Image</div>
+            <h3>氏名 / ポジション</h3>
+            <p>テクノロジーとデザインに興味を持つクリエイターです。<br>シンプルでユーザーフレンドリーな体験を提供することを心がけています。日々の業務や学習を通じて、新しい課題に挑戦することが好きです。</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-header">
+            <h2>Skills</h2>
+        </div>
+        <ul class="skills-list">
+            <li class="skill-item">HTML / CSS</li>
+            <li class="skill-item">JavaScript</li>
+            <li class="skill-item">UI/UX Design</li>
+            <li class="skill-item">Problem Solving</li>
+            <li class="skill-item">Team Communication</li>
+        </ul>
+    </section>
+
+    <section id="works">
+        <div class="section-header">
+            <h2>Works</h2>
+        </div>
+        <div class="works-grid">
+            <div class="work-card">
+                <h3>Project Alpha</h3>
+                <p>業務効率化のための内部ツールのUI構築を担当しました。直感的な操作性を重視して設計しています。</p>
+            </div>
+            <div class="work-card">
+                <h3>Project Beta</h3>
+                <p>情報の見やすさを優先したランディングページの作成。モバイルファーストなレイアウトを実装しました。</p>
+            </div>
+            <div class="work-card">
+                <h3>Project Gamma</h3>
+                <p>データ集計ダッシュボードのプロトタイプ。複雑な情報をシンプルに可視化する工夫を取り入れました。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="reflection">
+        <div class="section-header">
+            <h2>Reflection</h2>
+        </div>
+        <div class="reflection-content">
+            <p>これまでの経験を通じて、技術的なスキルの向上だけでなく、チームとの円滑な連携や、利用者の視点に立つことの重要性を学びました。特に、課題の根本的な原因を見極め、それを解決するための最適なアプローチを考えるプロセスにやりがいを感じています。</p>
+            <p>今後は、フロントエンドの知識を深めつつ、周辺領域の技術やプロジェクト管理手法にも視野を広げ、より多角的な視点から価値を提供できる人材へと成長していきたいと考えています。</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 MyPortfolio. All rights reserved.</p>
+</footer>
+
+<script>
+    // モバイルメニューの開閉処理
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        // アイコンの切り替え (☰ ⇔ ✕)
+        if (navLinks.classList.contains('active')) {
+            menuToggle.textContent = '✕';
+        } else {
+            menuToggle.textContent = '☰';
+        }
+    });
+
+    // リンククリック時にモバイルメニューを閉じる
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            menuToggle.textContent = '☰';
+        });
+    });
+
+    // スクロール時のフェードインアニメーション処理
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15 // 要素が15%見えたら発火
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // 一度表示されたら監視を解除
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+</script>
+</body>
+</html>
